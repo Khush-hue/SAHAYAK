@@ -1,0 +1,6 @@
+{
+  "name": "DoSJE Surveillance & Vigilance Portal",
+  "description": "Ministry of Social Justice & Empowerment National Surveillance, CCTV & Biometric Stream Monitor, Google Meet Virtual Inquiry Chamber, and Statutory Grant-in-Aid Adjudication Console with Cloud SQL persistence, real-time multi-device sync, and offline access.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

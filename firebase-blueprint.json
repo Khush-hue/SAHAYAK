@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role-based access for DoSJE central vigilance portal",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email", "description": "Official email address" },
+        "displayName": { "type": "string", "description": "Officer full name" },
+        "photoURL": { "type": "string", "description": "Officer avatar URL" },
+        "role": { "type": "string", "enum": ["CVO", "Joint Secretary", "Investigating Officer", "Auditor"], "description": "Designation" },
+        "officerId": { "type": "string", "description": "Vigilance badge ID" },
+        "createdAt": { "type": "string", "description": "ISO timestamp" },
+        "lastLoginAt": { "type": "string", "description": "ISO timestamp" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "AuditAction": {
+      "title": "AuditAction",
+      "description": "Persistent audit log or enforcement action taken by vigilance officer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique action UUID" },
+        "type": { "type": "string", "description": "Action type code" },
+        "institutionId": { "type": "string", "description": "Target NGO/Institution ID" },
+        "institutionName": { "type": "string", "description": "Target NGO name" },
+        "userUid": { "type": "string", "description": "Signatory UID" },
+        "userEmail": { "type": "string", "description": "Signatory Email" },
+        "timestamp": { "type": "string", "description": "ISO timestamp" },
+        "details": { "type": "string", "description": "Statutory notes or warrant clause" },
+        "isFrozen": { "type": "boolean", "description": "Whether action froze a grant tranche" }
+      },
+      "required": ["id", "type", "institutionId", "userUid", "timestamp"]
+    },
+    "InstitutionRecord": {
+      "title": "InstitutionRecord",
+      "description": "Monitored NGO with statutory grant data and compliance flags",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Institution ID" },
+        "name": { "type": "string", "description": "Institution Name" },
+        "darpanId": { "type": "string", "description": "NGO Darpan ID" },
+        "scheme": { "type": "string", "description": "Governing grant scheme" },
+        "sanctionedAmount": { "type": "string", "description": "Total grant sanctioned" },
+        "pendingTranche": { "type": "string", "description": "Tranche pending disbursal" },
+        "isTranche3Frozen": { "type": "boolean", "description": "Frozen status flag" },
+        "riskScore": { "type": "number", "description": "AI Risk index" },
+        "state": { "type": "string", "description": "State/UT" },
+        "lastUpdated": { "type": "string", "description": "ISO timestamp" }
+      },
+      "required": ["id", "name", "darpanId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Officer user profiles"
+    },
+    "/audit_actions/{actionId}": {
+      "schema": "AuditAction",
+      "description": "Persistent vigilance ledger actions and tranche freezes"
+    },
+    "/institutions/{institutionId}": {
+      "schema": "InstitutionRecord",
+      "description": "Monitored institutions and their live statutory status"
+    }
+  }
+}
